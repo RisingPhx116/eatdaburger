@@ -19,7 +19,8 @@ router.get("/", function (req, res) {
 });
 // Add new burger to the db.
 router.post("/api/burgers", function (req, res) {
-    burger.insertOne(["burgers", "devoured"], [req.body.burgers, req.body.devoured], function(result) {
+    console.log(req.body)
+    burger.create(["burger", "devoured"], [req.body.burger, req.body.devoured], function(result) {
         // Send back the ID of the new burger
         res.json({ id: result.insertId });
     });
@@ -30,7 +31,7 @@ router.put("/api/burgers/:id", function(req, res) {
 
     console.log("condition", condition);
 
-    burger.updateOne({ devoured: req.body.devoured }, condition, function(result) {
+    burger.update({ devoured: req.body.devoured }, condition, function(result) {
         if (result.changedRows === 0) {
             // If no rows were changed, then the ID must not exist, so 404.
             return res.status(404).end();
